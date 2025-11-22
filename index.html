@@ -307,25 +307,27 @@
         // Difficulty Settings
         let selectedDifficulty = 'MEDIUM';
         
-        // Config Objects for difficulties
+        // Config Objects for difficulties (KECEPATAN DISESUAIKAN DI SINI)
+        // speedMultiplier: Semakin kecil, semakin lambat musuh bergerak
         const DIFFICULTY_CONFIG = {
             'EASY': { 
                 spawnRateBase: 90, 
-                speedMultiplier: 0.4, 
+                speedMultiplier: 0.6, 
                 enemyHpDivisor: 5, 
                 scoreMult: 0.5 
             },
             'MEDIUM': { 
                 spawnRateBase: 60, 
-                speedMultiplier: 0.8, 
+                speedMultiplier: 1.0, 
                 enemyHpDivisor: 4, 
                 scoreMult: 1.0 
             },
+            // HARD MODE LEBIH AGRESIF
             'HARD': { 
-                spawnRateBase: 30, 
-                speedMultiplier: 1.5, 
-                enemyHpDivisor: 3, 
-                scoreMult: 2.0 
+                spawnRateBase: 20, // Muncul sangat cepat (banjir musuh)
+                speedMultiplier: 2.5, // Sangat ngebut (2.5x base speed)
+                enemyHpDivisor: 2, // HP Musuh lebih tebal (Size / 2)
+                scoreMult: 3.0 
             }
         };
         
@@ -392,7 +394,7 @@
                 this.height = 70;
                 this.color = '#EAE7DD'; // Rialo Cream
                 this.hp = 100;
-                this.speed = 0.1;
+                this.speed = 0.25; 
                 this.powerLevel = 1;
                 this.powerTimer = 0;
                 this.tilt = 0;
@@ -487,7 +489,7 @@
                 this.x = x;
                 this.y = y;
                 this.isEnemy = isEnemy;
-                this.vy = isEnemy ? 8 : -18;
+                this.vy = isEnemy ? 8 : -30; 
                 this.vx = vx;
                 this.size = isEnemy ? 5 : 3;
                 this.color = isEnemy ? '#ff0000' : '#ffcc00'; 
@@ -558,7 +560,7 @@
                     let shootChance = 0.015;
                     if (selectedDifficulty === 'EASY') shootChance = 0.002; 
                     if (selectedDifficulty === 'MEDIUM') shootChance = 0.008; 
-                    if (selectedDifficulty === 'HARD') shootChance = 0.03;
+                    if (selectedDifficulty === 'HARD') shootChance = 0.08; // Hard: 8% chance per frame (Very aggressive)
 
                     if (Math.random() < shootChance) {
                         enemyBullets.push(new Bullet(this.x, this.y + 20, 0, true));
